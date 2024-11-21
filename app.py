@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 app = Flask(__name__)
-index_html_path = '../templates/index.html'
+index_html_path = 'index.html'
 
 @app.route('/')
 def index():
