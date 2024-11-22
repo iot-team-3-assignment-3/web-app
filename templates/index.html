@@ -1,10 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block head %}
 
-{% block head %}
+<title>Group 3 assignment 3 dashboard</title>
 
-{% endblock %}
-
-{% block body %}
-<h1>Hello !!</h1>
-<p>my text</p>
+{% endblock %} {% block body %}
+<div id="page">
+  <div id="content" class="center-horiz">
+    <h1>Group 3 assignment 3 dashboard</h1>
+    <form action="/" method="post">
+      <div id="form-container">
+        <input
+          type="text"
+          name="content"
+          class="max-width"
+          placeholder="Some text"
+        />
+        <input
+          type="submit"
+          value="Submit POST request"
+          class="center-horiz center-vert button"
+        />
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
