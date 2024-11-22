@@ -1,11 +1,17 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
-index_html_path = 'index.html'
+index_html_path = "index.html"
 
-@app.route('/', methods=['GET'])
+
+@app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template(index_html_path)
+    if request.method == "POST":
+        form_content = request.form["content"]
+        return "POST request received! " + form_content
+    else:
+        return render_template(index_html_path)
+
 
 def main():
-    app.run(debug = True)
+    app.run(debug=True)
