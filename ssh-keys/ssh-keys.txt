@@ -1,0 +1,19 @@
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACCJ2G1YfYo5+m2ExUphKImFgTYTjcEn4LJi5FcDG500nwAAAKBdSJulXUib
+pQAAAAtzc2gtZWQyNTUxOQAAACCJ2G1YfYo5+m2ExUphKImFgTYTjcEn4LJi5FcDG500nw
+AAAEDTqSO8yQHtDY19yYFPlURronZjh+omEicd1RXr2CnO1InYbVh9ijn6bYTFSmEoiYWB
+NhONwSfgsmLkVwMbnTSfAAAAF2phbWlld2VsbHM1MjhAZ21haWwuY29tAQIDBAUG
+-----END OPENSSH PRIVATE KEY-----
+
++--[ED25519 256]--+
+|           ..OB=B|
+|          . +.OB=|
+|      .    o.EoO=|
+|       o   *B+B+=|
+|        S o OX..+|
+|         . o.. ..|
+|                .|
+|                 |
+|                 |
++----[SHA256]-----+
