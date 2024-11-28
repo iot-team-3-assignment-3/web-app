@@ -1,16 +1,13 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
+import json
 
 app = Flask(__name__)
-index_html_path = "index.html"
+index_path = "index.tsx"
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    if request.method == "POST":
-        form_content = request.form["content"]
-        return "POST request received! " + form_content
-    else:
-        return render_template(index_html_path)
+    return render_template(index_path)
 
 
 def main():
