@@ -1,17 +1,14 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, jsonify
 import json
 import requests
 
 app = Flask(__name__)
 index_path = "index.html"
 
-
 @app.route("/", methods=["POST", "GET"])
 def index():
-    request = requests.get('https://api.carbonintensity.org.uk/regional')
-    payload = request.content
-    json_data = json.loads(payload)
-    return render_template(index_path, payload=json_data)
+    payload = ((requests.get('https://api.carbonintensity.org.uk/regional', verify=False)).content).decode("utf-8")
+    return render_template(index_path, payload=payload)
 
 
 def main():

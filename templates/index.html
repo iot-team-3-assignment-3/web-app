@@ -2,5 +2,50 @@
 
 <title>Group 3 assignment 3</title>
 
-<p>{{ payload }}</p>
-{% endblock %} {% block body %} {% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+{% endblock %} {% block body %}
+<p class="hidden" id="payload">{{ payload }}</p>
+<canvas id="myChart" style="width: 800px; max-width: 600px"></canvas>
+<script>
+  const regions = [];
+  const intensity = [];
+  const chartData = {};
+  const payload = JSON.parse(document.getElementById("payload").innerText);
+  for (let i = 0; i < payload["data"][0]["regions"].length; i++) {
+    regions.push(String(payload["data"][0]["regions"][i]["shortname"]));
+    intensity.push(
+      parseInt(payload["data"][0]["regions"][i]["intensity"]["forecast"])
+    );
+
+    chartData[payload["data"][0]["regions"][i]["shortname"]] =
+      payload["data"][0]["regions"][i]["intensity"]["forecast"];
+  }
+
+  var xValues = regions;
+  var yValues = intensity;
+  var barColors = [];
+  var text = "Carbon Intensity"; //insert fuel type that user selects here
+
+  new Chart("myChart", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColors,
+          data: yValues,
+        },
+      ],
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: text,
+      },
+    },
+  });
+</script>
+
+{% endblock %}
