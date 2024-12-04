@@ -9,7 +9,9 @@ index_path = "index.html"
 @app.route("/", methods=["POST", "GET"])
 def index():
     request = requests.get('https://api.carbonintensity.org.uk/regional')
-    return render_template(index_path, request=request)
+    payload = request.content
+    json_data = json.loads(payload)
+    return render_template(index_path, payload=json_data)
 
 
 def main():
