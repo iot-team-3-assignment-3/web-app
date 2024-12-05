@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import requests
 
 app = Flask(__name__)
-index_path = "index.html"
+index_path = "structure.html"
 
 @app.route("/", methods=["POST", "GET"])
 def index():

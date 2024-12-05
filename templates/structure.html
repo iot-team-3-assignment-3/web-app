@@ -1,0 +1,172 @@
+{% extends 'base.html' %} {% block head %}
+
+<title>Group 3 assignment 3</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script>
+
+{% endblock %} {% block body %}
+<p class="hidden" id="payload">{{ payload }}</p>
+<div id="page">
+  <div id="sidebar" class="container">
+    <div
+      id="dashboard"
+      class="active tab"
+      onclick="hideShow('readme-tabs-content', 'charts-tab-content', 'dashboard', 'docs')"
+    >
+      <h3 class="tab-label">Dashboard</h3>
+    </div>
+    <div id="docs" class="tab">
+      <h3
+        class="tab-label"
+        onclick="hideShow('charts-tab-content', 'readme-tabs-content', 'docs', 'dashboard')"
+      >
+        Docs
+      </h3>
+    </div>
+    <div class="flex-column">
+      <!-- Github links -->
+      <div class="github-link"></div>
+    </div>
+  </div>
+  <div id="content">
+    <div id="charts-tab-content">
+      <h1>Charts</h1>
+      <canvas
+        id="all-regions"
+        style="max-width: 100%; max-height: 500px; margin-left: -10px"
+      ></canvas>
+      <hr style="border: #585858 1px solid; margin: 20px" />
+      <div class="flex-row space-between">
+        <canvas
+          id="filter-region"
+          style="max-width: 50%; height: 200px"
+        ></canvas>
+        <canvas
+          id="filter-energy-source"
+          style="max-width: 50%; height: 200px"
+        ></canvas>
+      </div>
+    </div>
+    <div id="readme-tabs-content" class="hidden">
+      <div>
+        <md># Documentation
+          
+          
+          For this dashboard we used the National Energy Systems Operator (NESO) Carbon Intensity API to see how many grams of CO2 per kilowatt hour 
+          different regions in the UK produce. This allows us to see which regions would benefit most from a targeted intervention 
+          regarding its energy sources.
+
+
+
+          You can view the Carbon Intensity Forecast as a bar chart or pie chart to see the estimated carbon intensity for the next 2 days, to see
+          how much carbon regions are expected to release over the coming days. If a region's forecasted carbon intensity spikes, further analysis
+          could be done to identify the causes and take preventative measures against future occurrences. 
+
+
+
+          Source: https://carbonintensity.org.uk
+
+        </md>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // normal scripting
+  function hideShow(hideid, showid, activeTab, inactiveTab) {
+    document.getElementById(hideid).classList.add("hidden");
+    document.getElementById(showid).classList.remove("hidden");
+    document.getElementById(activeTab).classList.add("active");
+    document.getElementById(inactiveTab).classList.remove("active");
+  }
+</script>
+<script>
+  // Render charts
+
+  const regions = [];
+  const intensity = [];
+  // Initialising arrays to be used for storing the chart data
+
+  const payload = JSON.parse(document.getElementById("payload").innerText);
+  // Used Jinja2 syntax (line 8) in HTML element (as this doesn't work in JavaScript) to get rendered data from Flask,
+  // then grabbing it from the element it's rendered in
+
+  for (let i = 0; i < payload["data"][0]["regions"].length; i++) {
+    regions.push(String(payload["data"][0]["regions"][i]["shortname"]));
+    intensity.push(
+      parseInt(payload["data"][0]["regions"][i]["intensity"]["forecast"])
+    );
+
+    // iterating through each 'regions' entry in the payload, and adding its respective region name and intensity forecast to separate arrays.
+  }
+
+  var xValues = regions;
+  var yValues = intensity;
+  // Adding each array to the values to display on the chart
+
+  var barColor = "#4287f5";
+  var text = "Carbon Intensity Forecast (gCO2e/kWh)";
+
+  new Chart("all-regions", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColor,
+          data: yValues,
+        },
+      ],
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: text,
+      },
+    },
+  });
+
+  new Chart("filter-region", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColor,
+          data: yValues,
+        },
+      ],
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: text,
+      },
+    },
+  });
+
+  new Chart("filter-energy-source", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          backgroundColor: barColor,
+          data: yValues,
+        },
+      ],
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: text,
+      },
+    },
+  });
+</script>
+
+{% endblock %}
