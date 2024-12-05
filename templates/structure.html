@@ -4,6 +4,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&"
+/>
 
 {% endblock %} {% block body %}
 <p class="hidden" id="payload">{{ payload }}</p>
@@ -37,15 +41,48 @@
         style="max-width: 100%; max-height: 500px; margin-left: -10px"
       ></canvas>
       <hr style="border: #585858 1px solid; margin: 20px" />
-      <div class="flex-row space-between">
-        <canvas
-          id="filter-region"
-          style="max-width: 50%; height: 200px"
-        ></canvas>
-        <canvas
-          id="filter-energy-source"
-          style="max-width: 50%; height: 200px"
-        ></canvas>
+      <div class="flex-row space-around">
+        <div style="width: 50%; min-height: 300px">
+          <!-- Canvas 1 -->
+          <div class="dropdown">
+            <button style="align-self: flex-end" class="dropbtn">
+              <div class="flex-row space-between">
+                <p style="text-align: center; align-self: center; margin: auto">
+                  No region
+                </p>
+                <span id="icon1" class="material-symbols-outlined">
+                  keyboard_arrow_down
+                </span>
+              </div>
+            </button>
+            <div class="dropdown-content">
+              <a href="#">Link 1</a>
+            </div>
+          </div>
+
+          <canvas id="filter-region" style="margin-top: 20px"></canvas>
+        </div>
+
+        <div style="max-height: 300px">
+          <!-- Canvas 2 -->
+          <div class="dropdown">
+            <button style="align-self: flex-end" class="dropbtn">
+              <div class="flex-row space-between">
+                <p style="text-align: center; align-self: center; margin: auto">
+                  No region
+                </p>
+                <span id="icon2" class="material-symbols-outlined">
+                  keyboard_arrow_down
+                </span>
+              </div>
+            </button>
+            <div class="dropdown-content">
+              <a href="#">Link 1</a>
+            </div>
+          </div>
+
+          <canvas id="filter-energy-source" style="margin-top: 20px"></canvas>
+        </div>
       </div>
     </div>
     <div id="readme-tabs-content" class="hidden">
