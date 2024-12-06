@@ -112,4 +112,10 @@
   border-top: 1px solid #484848;
 }
 
+.dropdown-content a:hover {
+    cursor: pointer;
+    background-color: #484848;
+    transition: 0.3s;
+}
+
 .dropdown:hover .dropdown-content {display: block;}

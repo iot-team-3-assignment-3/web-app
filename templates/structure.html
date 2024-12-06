@@ -10,7 +10,8 @@
 />
 
 {% endblock %} {% block body %}
-<p class="hidden" id="payload">{{ payload }}</p>
+<p class="hidden" id="payload">{{ JSON_response }}</p>
+<p class="hidden" id="string-response">{{ string_response }}</p>
 <div id="page">
   <div id="sidebar" class="container">
     <div
@@ -38,37 +39,52 @@
       <h1>Charts</h1>
       <canvas
         id="all-regions"
-        style="max-width: 100%; max-height: 500px; margin-left: -10px"
+        style="max-width: 100%; min-height: 500px; margin-left: -10px"
       ></canvas>
       <hr style="border: #585858 1px solid; margin: 20px" />
       <div class="flex-row space-around">
-        <div style="width: 50%; min-height: 300px">
+        <div style="width: 55%; min-height: 400px">
           <!-- Canvas 1 -->
           <div class="dropdown">
             <button style="align-self: flex-end" class="dropbtn">
               <div class="flex-row space-between">
-                <p style="text-align: center; align-self: center; margin: auto">
-                  No region
+                <p
+                  id="energy-label"
+                  style="text-align: center; align-self: center; margin: auto"
+                >
+                  No energy type
                 </p>
                 <span id="icon1" class="material-symbols-outlined">
                   keyboard_arrow_down
                 </span>
               </div>
             </button>
-            <div class="dropdown-content">
-              <a href="#">Link 1</a>
+            <div class="dropdown-content" id="dropdown-content">
+              {% for item in
+              JSON_response["data"][0]["regions"][0]["generationmix"] %}
+              <a onclick="toggleEnergytype({{ loop.index0 }})">
+                <!-- Do not change this!!! This is correct Jinja2 syntaxing for Flask, HTML just does not recognise it -->
+                {{ item['fuel'] }}
+              </a>
+              {% endfor %}
             </div>
           </div>
 
-          <canvas id="filter-region" style="margin-top: 20px"></canvas>
+          <canvas
+            id="filter-region"
+            style="margin-top: 20px; max-height: 400px; width: 55%"
+          ></canvas>
         </div>
 
-        <div style="max-height: 300px">
+        <div>
           <!-- Canvas 2 -->
           <div class="dropdown">
             <button style="align-self: flex-end" class="dropbtn">
               <div class="flex-row space-between">
-                <p style="text-align: center; align-self: center; margin: auto">
+                <p
+                  id="region-label"
+                  style="text-align: center; align-self: center; margin: auto"
+                >
                   No region
                 </p>
                 <span id="icon2" class="material-symbols-outlined">
@@ -77,7 +93,11 @@
               </div>
             </button>
             <div class="dropdown-content">
-              <a href="#">Link 1</a>
+              {% for item in JSON_response["data"][0]["regions"] %}
+              <a onclick="toggleEnergytype({{ loop.index0 }})">
+                {{ item['shortname'] }}
+              </a>
+              {% endfor %}
             </div>
           </div>
 
@@ -92,101 +112,6 @@
     </div>
   </div>
 </div>
-<script>
-  // normal scripting
-  function hideShow(hideid, showid, activeTab, inactiveTab) {
-    document.getElementById(hideid).classList.add("hidden");
-    document.getElementById(showid).classList.remove("hidden");
-    document.getElementById(activeTab).classList.add("active");
-    document.getElementById(inactiveTab).classList.remove("active");
-  }
-</script>
-<script>
-  // Render charts
-
-  const regions = [];
-  const intensity = [];
-  // Initialising arrays to be used for storing the chart data
-
-  const payload = JSON.parse(document.getElementById("payload").innerText);
-  // Used Jinja2 syntax (line 8) in HTML element (as this doesn't work in JavaScript) to get rendered data from Flask,
-  // then grabbing it from the element it's rendered in
-
-  for (let i = 0; i < payload["data"][0]["regions"].length; i++) {
-    regions.push(String(payload["data"][0]["regions"][i]["shortname"]));
-    intensity.push(
-      parseInt(payload["data"][0]["regions"][i]["intensity"]["forecast"])
-    );
-
-    // iterating through each 'regions' entry in the payload, and adding its respective region name and intensity forecast to separate arrays.
-  }
-
-  var xValues = regions;
-  var yValues = intensity;
-  // Adding each array to the values to display on the chart
-
-  var barColor = "#4287f5";
-  var text = "Carbon Intensity Forecast (gCO2e/kWh)";
-
-  new Chart("all-regions", {
-    type: "bar",
-    data: {
-      labels: xValues,
-      datasets: [
-        {
-          backgroundColor: barColor,
-          data: yValues,
-        },
-      ],
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: text,
-      },
-    },
-  });
-
-  new Chart("filter-region", {
-    type: "bar",
-    data: {
-      labels: xValues,
-      datasets: [
-        {
-          backgroundColor: barColor,
-          data: yValues,
-        },
-      ],
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: text,
-      },
-    },
-  });
-
-  new Chart("filter-energy-source", {
-    type: "pie",
-    data: {
-      labels: xValues,
-      datasets: [
-        {
-          backgroundColor: barColor,
-          data: yValues,
-        },
-      ],
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: text,
-      },
-    },
-  });
-</script>
+<script src="/static/scripts/filterFuel.js"></script>
 
 {% endblock %}
