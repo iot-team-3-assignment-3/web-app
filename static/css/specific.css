@@ -57,6 +57,7 @@
 #content {
     width: 100%;
     height: fit-content;
+    padding-bottom: 60px;
 }
 
 #sidebar {
@@ -77,3 +78,38 @@
     background-color: #484848;
     transition: 0.3s;
 }
+
+#icon1 {
+    font-size: 16px;
+}
+
+#icon2 {
+    font-size: 16px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--dark-hover);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.dropdown-content a {
+  color: var(--light);
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+  font-size: 12px;
+  border-top: 1px solid #484848;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
