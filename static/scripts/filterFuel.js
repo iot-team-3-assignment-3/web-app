@@ -83,8 +83,66 @@ function populateCharts() {
 
 // Adding each array to the values to display on the chart
 
-var barColor = "#4287f5";
-var text = "Carbon Intensity Forecast (gCO2e/kWh)";
+var barColorsBlue = [
+  "#0000ff",
+  "#0000cc",
+  "#000099",
+  "#000066",
+  "#000033",
+  "#0033ff",
+  "#0066ff",
+  "#0099ff",
+  "#00ccff",
+  "#33ccff",
+  "#66ccff",
+  "#99ccff",
+  "#ccccff",
+  "#6699ff",
+  "#3366ff",
+  "#0033cc",
+  "#003399",
+  "#003366",
+];
+var barColorsRed = [
+  "#ff0000",
+  "#cc0000",
+  "#990000",
+  "#660000",
+  "#330000",
+  "#ff3333",
+  "#ff6666",
+  "#ff9999",
+  "#ffcccc",
+  "#ff6633",
+  "#ff3300",
+  "#cc3300",
+  "#993300",
+  "#660033",
+  "#ff0033",
+  "#cc0033",
+  "#990033",
+  "#660000",
+];
+var barColorsGreen = [
+  "#00ff00",
+  "#00cc00",
+  "#009900",
+  "#006600",
+  "#003300",
+  "#33ff33",
+  "#66ff66",
+  "#99ff99",
+  "#ccffcc",
+  "#33cc33",
+  "#33ff00",
+  "#00ff33",
+  "#00cc33",
+  "#009933",
+  "#339933",
+  "#66cc66",
+  "#99cc99",
+  "#336600",
+];
 
 function renderCharts() {
   new Chart("all-regions", {
@@ -93,7 +151,7 @@ function renderCharts() {
       labels: regions,
       datasets: [
         {
-          backgroundColor: barColor,
+          backgroundColor: barColorsBlue,
           data: intensity,
         },
       ],
@@ -102,7 +160,7 @@ function renderCharts() {
       legend: { display: false },
       title: {
         display: true,
-        text: text,
+        text: "Carbon Intensity Forecast (gCO2e/kWh)",
       },
     },
   });
@@ -113,7 +171,7 @@ function renderCharts() {
       labels: regions,
       datasets: [
         {
-          backgroundColor: barColor,
+          backgroundColor: barColorsRed,
           data: current_fuel_values,
         },
       ],
@@ -123,7 +181,7 @@ function renderCharts() {
       legend: { display: false },
       title: {
         display: true,
-        text: text,
+        text: "% distribution of fuel type by region",
       },
     },
   });
@@ -134,7 +192,7 @@ function renderCharts() {
       labels: regions,
       datasets: [
         {
-          backgroundColor: barColor,
+          backgroundColor: barColorsGreen,
           data: intensity,
         },
       ],
@@ -143,7 +201,7 @@ function renderCharts() {
       legend: { display: false },
       title: {
         display: true,
-        text: text,
+        text: "% distribution of fuel types per region",
       },
     },
   });
