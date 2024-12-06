@@ -15,19 +15,29 @@
 <div id="page">
   <div id="sidebar" class="container">
     <div
-      id="dashboard"
-      class="active tab"
-      onclick="hideShow('readme-tabs-content', 'charts-tab-content', 'dashboard', 'docs')"
+      style="
+        position: fixed;
+        width: 160px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      "
     >
-      <h3 class="tab-label">Dashboard</h3>
-    </div>
-    <div id="docs" class="tab">
-      <h3
-        class="tab-label"
-        onclick="hideShow('charts-tab-content', 'readme-tabs-content', 'docs', 'dashboard')"
+      <div
+        id="dashboard"
+        class="active tab"
+        onclick="hideShow('readme-tabs-content', 'charts-tab-content', 'dashboard', 'docs')"
       >
-        Docs
-      </h3>
+        <h3 class="tab-label">Dashboard</h3>
+      </div>
+      <div id="docs" class="tab">
+        <h3
+          class="tab-label"
+          onclick="hideShow('charts-tab-content', 'readme-tabs-content', 'docs', 'dashboard')"
+        >
+          Docs
+        </h3>
+      </div>
     </div>
     <div class="flex-column">
       <!-- Github links -->
