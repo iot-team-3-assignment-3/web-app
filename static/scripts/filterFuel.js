@@ -38,13 +38,14 @@ function toggleEnergytype(energyIndex) {
     current_fuel_values.push(
       parseFloat(
         payload["data"][0]["regions"][i]["generationmix"][energyIndex]["perc"]
-      )
+      ).toFixed(1)
     );
   }
+  current_fuel_values;
+  console.log(current_fuel_values);
   loadInitialEnergy(energyIndex);
   chartToChange.data.datasets[0].data = current_fuel_values;
   chartToChange.update();
-  console.log(`Values updated! ${current_fuel_values}`);
 }
 
 // Render charts
