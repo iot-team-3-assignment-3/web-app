@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block head %}
 
-<title>Group 3 assignment 3</title>
+<title>UK Carbon intensity Dashboard</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script>
@@ -115,10 +115,40 @@
         </div>
       </div>
     </div>
-    <div id="readme-tabs-content" class="hidden">
-      <div>
-        <md># Example </md>
-      </div>
+    <div
+      id="readme-tabs-content"
+      class="hidden"
+      style="
+        width: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      "
+    >
+      <md># Documentation </md>
+      <md>
+        For this dashboard we used the National Energy Systems Operator (NESO)
+        Carbon Intensity API to see how many grams of CO2 per kilowatt hour
+        different regions in the UK produce. This allows us to see which regions
+        would benefit most from a targeted intervention regarding its energy
+        sources. You can view the Carbon Intensity Forecast as a bar chart or
+        pie chart to see the estimated carbon intensity for the next 2 days, to
+        see how much carbon regions are expected to release over the coming
+        days. If a region's forecasted carbon intensity spikes, further analysis
+        could be done to identify the causes and take preventative measures
+        against future occurrences. Source:
+      </md>
+      <github-md>```https://carbonintensity.org.uk```</github-md>
+
+      <md>
+        Carbon Intensity API National Energy System Operator, in partnership
+        with Environmental Defense Fund Europe, University of Oxford Department
+        of Computer Science and WWF, have developed a Carbon Intensity forecast
+        for the GB electricity system, with weather data provided by the Met
+        Office.
+      </md>
     </div>
   </div>
 </div>

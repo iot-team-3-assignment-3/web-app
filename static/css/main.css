@@ -140,3 +140,23 @@
   .sub-header {
     margin-bottom: 5px;
   }
+
+  md, github-md {
+    color: var(--light);
+    max-width: 700px;
+    align-self: center;
+    justify-self: center;
+    margin: 10px 20px;
+    text-align: center;
+  }
+
+  github-md > p {
+    color: #eee;
+    font-size: 18px;
+  }
+
+  div > github-md {
+    background-color: #262626;
+    margin: 5px;
+    text-align: center;
+  }
