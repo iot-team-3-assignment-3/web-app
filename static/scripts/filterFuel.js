@@ -41,11 +41,26 @@ function toggleEnergytype(energyIndex) {
       ).toFixed(1)
     );
   }
-  current_fuel_values;
-  console.log(current_fuel_values);
   loadInitialEnergy(energyIndex);
-  chartToChange.data.datasets[0].data = current_fuel_values;
-  chartToChange.update();
+  energyChartToChange.data.datasets[0].data = current_fuel_values;
+  energyChartToChange.update();
+}
+
+function toggleRegion(energyIndex) {
+  // This is what happens when you click a filter option
+  // New values are pulled from the payload, and the chart is updated to display the new values
+  current_region_fuel_values = [];
+  for (let i = 0; i < 9; i++) {
+    current_region_fuel_values.push(
+      parseFloat(
+        payload["data"][0]["regions"][energyIndex]["generationmix"][i]["perc"]
+      ).toFixed(1)
+    );
+  }
+  console.log(current_region_fuel_values);
+  loadInitialRegion(energyIndex);
+  regionChartToChange.data.datasets[0].data = current_region_fuel_values;
+  regionChartToChange.update();
 }
 
 // Render charts
@@ -53,7 +68,8 @@ function toggleEnergytype(energyIndex) {
 // Setting up lists of values for chart 1
 const regions = [];
 const intensity = [];
-let chartToChange;
+let energyChartToChange;
+let regionChartToChange;
 
 // Initialising arrays to be used for storing the chart data
 
@@ -61,6 +77,8 @@ let chartToChange;
 let current_region_by_energy = {};
 let current_fuel_by_region = {};
 let current_fuel_values = [];
+let current_region_fuel_values = [];
+let fuelTypes = [];
 
 function populateCharts() {
   for (let i = 0; i < payload["data"][0]["regions"].length; i++) {
@@ -79,10 +97,86 @@ function populateCharts() {
     current_fuel_values.push(
       parseFloat(payload["data"][0]["regions"][i]["generationmix"][0]["perc"])
     );
+
+    if (i < 9) {
+      current_region_fuel_values.push(
+        parseFloat(payload["data"][0]["regions"][0]["generationmix"][i]["perc"])
+      );
+
+      fuelTypes.push(
+        String(payload["data"][0]["regions"][0]["generationmix"][i]["fuel"])
+      );
+    }
   }
 }
 
 // Adding each array to the values to display on the chart
+
+function renderCharts() {
+  new Chart("all-regions", {
+    type: "bar",
+    data: {
+      labels: regions,
+      datasets: [
+        {
+          backgroundColor: barColorsBlue,
+          data: intensity,
+        },
+      ],
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: "Carbon Intensity Forecast (gCO2e/kWh)",
+      },
+    },
+  });
+
+  const filterEnergyChart = new Chart("filter-region", {
+    type: "bar",
+    data: {
+      labels: regions,
+      datasets: [
+        {
+          backgroundColor: barColorsRed,
+          data: current_fuel_values,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      legend: { display: false },
+      title: {
+        display: true,
+        text: "% distribution of fuel type by region",
+      },
+    },
+  });
+
+  const filterRegionChart = new Chart("filter-energy-source", {
+    type: "pie",
+    data: {
+      labels: fuelTypes, // needs to be fuel types
+      datasets: [
+        {
+          backgroundColor: barColorsGreen,
+          data: current_region_fuel_values,
+        },
+      ],
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: "% distribution of fuel types per region",
+      },
+    },
+  });
+
+  energyChartToChange = filterEnergyChart;
+  regionChartToChange = filterRegionChart;
+}
 
 var barColorsBlue = [
   "#0000ff",
@@ -144,68 +238,3 @@ var barColorsGreen = [
   "#99cc99",
   "#336600",
 ];
-
-function renderCharts() {
-  new Chart("all-regions", {
-    type: "bar",
-    data: {
-      labels: regions,
-      datasets: [
-        {
-          backgroundColor: barColorsBlue,
-          data: intensity,
-        },
-      ],
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: "Carbon Intensity Forecast (gCO2e/kWh)",
-      },
-    },
-  });
-
-  const filterRegionChart = new Chart("filter-region", {
-    type: "bar",
-    data: {
-      labels: regions,
-      datasets: [
-        {
-          backgroundColor: barColorsRed,
-          data: current_fuel_values,
-        },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      legend: { display: false },
-      title: {
-        display: true,
-        text: "% distribution of fuel type by region",
-      },
-    },
-  });
-
-  new Chart("filter-energy-source", {
-    type: "pie",
-    data: {
-      labels: regions,
-      datasets: [
-        {
-          backgroundColor: barColorsGreen,
-          data: intensity,
-        },
-      ],
-    },
-    options: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: "% distribution of fuel types per region",
-      },
-    },
-  });
-
-  chartToChange = filterRegionChart;
-}

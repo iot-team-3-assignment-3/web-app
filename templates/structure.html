@@ -104,7 +104,7 @@
             </button>
             <div class="dropdown-content">
               {% for item in JSON_response["data"][0]["regions"] %}
-              <a onclick="toggleEnergytype({{ loop.index0 }})">
+              <a onclick="toggleRegion({{ loop.index0 }})">
                 {{ item['shortname'] }}
               </a>
               {% endfor %}
